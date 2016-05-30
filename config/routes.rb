@@ -1,5 +1,22 @@
 Rails.application.routes.draw do
-  root 'welcome#index'
+
+  namespace :account do
+   resources :groups
+   resources :posts
+ end
+ 
+  get 'account/groups'
+
+  devise_for :users
+  root 'groups#index'
+  resources :groups do
+    member do
+      post :join
+      post :quit
+    end
+    
+    resources :posts
+  end
 end
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -56,4 +73,3 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-end
